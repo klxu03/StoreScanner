@@ -6,11 +6,12 @@
         </fieldset>
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Search for an item</legend>
+            Choose an image
             <div class="form-group" id="hide">
-                CHoose an image
                 {{ form.picture(class="")}}
                 {{ form.picture.label(class="form-control-label")}}
             </div>
+            OR
             <div class="input-group" > 
                 {{ form.item(class="form-control form-contol-lg")}}
                 <span class="input-group-btn">
