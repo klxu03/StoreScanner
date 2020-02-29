@@ -4,6 +4,9 @@ from flask import render_template, url_for
 items = {
     "apple": {
                 "name": "apple"
+            },
+    "orange": {
+                "name": "orange"
             }
 }
 
@@ -19,6 +22,10 @@ def item():
 @app.route('/cart')
 def cart():
     return render_template("cart.html")
+
+@app.route('/scan')
+def scan():
+    return render_template("scan.html")
 
 @app.route('/')
 def home():
