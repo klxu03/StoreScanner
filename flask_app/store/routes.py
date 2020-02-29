@@ -10,4 +10,4 @@ items = {
 
 @app.route('/item/<name>')
 def item(name):
-    return render_template("index.html", info=items["apple"])
+    return render_template("index.html", info=items[name])
