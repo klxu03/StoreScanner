@@ -1,6 +1,6 @@
 from store import app
 from flask import render_template, url_for, session, request, redirect
-from store.form import ItemForm
+from store.form import ItemForm, ListForm
 # Import sessions
 from flask_session import Session
 
@@ -48,9 +48,17 @@ def cart():
 
 @app.route('/shoppinglist')
 def shoppinglist():
+    listForm = ListForm()
+    if listForm.validate_on_submit():
+        listItem = request.form['item']
+        print(listItem)
+    return render_template("shoppinglist.html", form=listForm)
+
+@app.route('/addlistitem', methods=['POST'])
+def addlistitem():
     if session.get('shoppinglist', False):
         session['shoppinglist'].append()
-    return render_template("shoppinglist.html")
+    return render_template("shoppinglist.html", shoppinglist = session.get('shoppinglist', []))
 
 @app.route('/scan')
 def scan():
