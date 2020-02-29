@@ -90,7 +90,7 @@ def handleFileUpload():
         photo = request.files['photo']
         if photo.filename != '':            
             photo.save(os.path.join('./store/image-upload', photo.filename))
-    return redirect(url_for('fileFrontPage'))
+    return redirect(url_for('item.html'))
 
 @app.route('/')
 def home():
