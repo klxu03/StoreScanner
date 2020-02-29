@@ -25,7 +25,10 @@ def item():
     if itemForm.validate_on_submit():
         usrItem = request.form['item']
         print(usrItem)
-    return render_template("itemSearch.html", form=itemForm)
+        # go to the page of the given item
+        return redirect(url_for('getInfo', name=usrItem))
+    else:
+    	return render_template("itemSearch.html", form=itemForm)
 
 @app.route('/additem/<item>')
 def additem(item):

@@ -9,7 +9,8 @@ from flask_session import Session
 import os
 # Import CSRF protection
 from flask_wtf.csrf import CSRFProtect
-
+# Import libraries for limits on external uploads in Flask forms
+#from flask.ext.uploads import UploadSet, IMAGES
 
 # Create the flask app
 app = Flask(__name__)
@@ -24,6 +25,11 @@ Session(app)
 csrf = CSRFProtect(app)
 # Add ssl
 #SSLify(app)
+
+# Configure the image uploading 
+#images = UploadSet('images', IMAGES)
+# Store the configuration of the Flask-Uploads module in the Flask application
+#configure_uploads(app, images)
 
 # Import the routes here 
 from store import routes

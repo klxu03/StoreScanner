@@ -6,22 +6,25 @@
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Take a picture of an item's barcode</legend>
             <div class="form-group"> 
-                <input type="file" accept="image/*" class="form-control-file" id="item-picture" placeholder="Enter an item">
+                <!-- TODO make form work like forms below, less HTML 
+                    TODO split up file upload and text input -->
+                <input type="file" accept="image/*" class="form-control-file" id="item-picture" placeholder="Enter an item" onchange="form.submit()">
             </div>
+        </fieldset>
+    </form>
+    <div></div>
+    <form method="POST" action="{{ url_for('item') }}">
+        {{ form.csrf_token }} 
         </fieldset>
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Search for an item manually</legend>
-            <div class="form-group"> 
-                <input type="text" class="form-control" id="item-text" placeholder="Enter an item">
+            <legend class="border-bottom mb-4">Search for an item</legend>
+            <div class="input-group" > 
+                {{ form.item(class="form-control form-contol-lg")}}
+                <span class="input-group-btn">
+                    {{ form.submit(class="btn btn-info go inline", id='submit') }}
+                </span>
             </div>
         </fieldset>
-        <!--- <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Search for an item</legend>
-            <div class="form-group"> 
-                {{ form.item(class="form-control form-contol-lg")}}
-            </div>
-        </fieldset> --->
-        {{ form.submit(class="btn btn-info btn-block", id='submit') }}
     </form>
 </div>
 {% endblock %}
