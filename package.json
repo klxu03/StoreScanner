@@ -11,13 +11,14 @@
     "url": "git+https://github.com/klxu03/StoreScanner.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Kevin Xu",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/klxu03/StoreScanner/issues"
   },
   "homepage": "https://github.com/klxu03/StoreScanner#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "router": "^1.3.4"
   }
 }
