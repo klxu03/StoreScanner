@@ -1,4 +1,16 @@
 {% extends "layout.html" %}
 {% block item %}
-<p>hai</p>
+<div class="col-md-4 offset-md-4 login-form">
+    <form method="POST" action="{{ url_for('shoppinglist') }}">
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Shopping List</legend>
+            <div class="input-group" >
+                {{ form.item(class="form-control form-contol-lg")}}
+                <span class="input-group-btn">
+                    {{ form.submit(class="btn btn-info go inline", id='submit') }}
+                </span>
+            </div>
+        </fieldset>
+    </form>
+</div>
 {% endblock %}

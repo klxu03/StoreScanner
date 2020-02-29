@@ -10,3 +10,7 @@ class ItemForm(FlaskForm):
     item = StringField('Item', render_kw={"placeholder": "Enter an item"})
     # Add a submit field
     submit = SubmitField('Search!')
+
+class ListForm(FlaskForm):
+    item = StringField('Item', render_kw={"placeholder": "Add an item to your shopping list"})
+    submit = SubmitField('Add Item')

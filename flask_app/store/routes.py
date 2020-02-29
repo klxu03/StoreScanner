@@ -1,6 +1,6 @@
 from store import app
 from flask import render_template, url_for, session, request, redirect
-from store.form import ItemForm
+from store.form import ItemForm, ListForm
 # Import sessions
 from flask_session import Session
 from werkzeug.utils import secure_filename
@@ -29,11 +29,16 @@ def getInfo(name):
 def item():
     itemForm = ItemForm()
     if itemForm.validate_on_submit():
-        usrItem = request.form['item']
-        filename = itemForm.picture.data.filename
-        itemForm.picture.data.save('uploads/' + filename)
-        # go to the page of the given item
-        return redirect(url_for('getInfo', name=usrItem))
+        itemText = request.form['item']        
+        itemImage = request.form['picture']
+        if itemText is not "": # there's something in the text form
+            print(itemText)
+            # go to the page of the given item
+            return redirect(url_for('getInfo', name=itemText))
+        else: # no text - is there a picture? (TODO)
+            print("No text!")
+            print(itemImage)
+            return redirect(url_for('getInfo', name='apple')) #temporarily just redirect to /items/apple
     else:
     	return render_template("itemSearch.html", form=itemForm)
 
@@ -58,9 +63,17 @@ def cart():
 
 @app.route('/shoppinglist')
 def shoppinglist():
+    listForm = ListForm()
+    if listForm.validate_on_submit():
+        listItem = request.form['item']
+        print(listItem)
+    return render_template("shoppinglist.html", form=listForm)
+
+@app.route('/addlistitem', methods=['POST'])
+def addlistitem():
     if session.get('shoppinglist', False):
         session['shoppinglist'].append()
-    return render_template("shoppinglist.html")
+    return render_template("shoppinglist.html", shoppinglist = session.get('shoppinglist', []))
 
 @app.route('/scan')
 def scan():
