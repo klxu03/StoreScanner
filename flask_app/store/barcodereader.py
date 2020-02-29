@@ -1,12 +1,26 @@
-from pyzbar import pyzbar
-import argparse
+#!/usr/bin/python3
+# -*- coding: Utf-8 -*-
+
+from __future__ import print_function
+import pyzbar.pyzbar as pyzbar
 import cv2
 
-ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required=True,
-	help="barcode.png")
-args = vars(ap.parse_args())
-# load the input image
-image = cv2.imread(args["image"])
-# find the barcodes in the image and decode each of the barcodes
-barcodes = pyzbar.decode(image)
+def decode(bc) :
+    # Find barcodes and QR codes
+    decodedObjects = pyzbar.decode(bc)
+
+    # Print results
+    for obj in decodedObjects:
+        print('Type : ', obj.type)
+        print('Data : ', obj.data)
+
+    return decodedObjects
+
+
+# Main
+if __name__ == '__main__':
+
+    # Read image
+    bc = cv2.imread('barcode.png')
+
+    decodedObjects = decode(bc)
