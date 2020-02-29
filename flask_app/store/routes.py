@@ -1,3 +1,4 @@
+import os
 from store import app
 from flask import render_template, url_for, session, request, redirect
 from store.form import ItemForm
@@ -64,9 +65,13 @@ def shoppinglist():
         session['shoppinglist'].append()
     return render_template("shoppinglist.html")
 
-@app.route('/scan')
-def scan():
-    return render_template("scan.html")
+@app.route("/handleUpload", methods=['POST'])
+def handleFileUpload():
+    if 'photo' in request.files:
+        photo = request.files['photo']
+        if photo.filename != '':            
+            photo.save(os.path.join('./store/image-upload', photo.filename))
+    return redirect(url_for('fileFrontPage'))
 
 @app.route('/')
 def home():
