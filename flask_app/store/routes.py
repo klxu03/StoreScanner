@@ -1,10 +1,11 @@
 import os
 from store import app
 from flask import render_template, url_for, session, request, redirect
+from .edamam import product_info
 from store.form import ItemForm, ListForm
-# Import sessions
 from flask_session import Session
 from werkzeug.utils import secure_filename
+
 
 items = {
     "apple": {
@@ -23,8 +24,15 @@ sess.init_app(app)
 
 
 @app.route('/item/<name>')
-def getInfo(name):
-    return render_template("item.html", info=items[name]) if name in items else render_template("item.html", info={"name":"Unknown item"})
+def getInfo(name, file_name=None):
+	if file_name == None: #name based evaluation
+		item_info = product_info(name) # get nutritional info based on name
+		print(item_info)
+		extra_info = items[name] if name in items else items["other"]
+		if name in items:
+		    return render_template("item.html", info=items[name])
+		else:
+			return render_template("item.html", info={"name":"Unknown item"})
 
 @app.route('/item', methods=['GET', 'POST'])
 def item():
