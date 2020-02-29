@@ -32,6 +32,7 @@ def getInfo(name):
     item_info = product_info(name) # get nutritional info based on name
     print(item_info)
     extra_info = items[name] if name in items else items["other"]
+    
     if name in items:
         return render_template("item.html", info=items[name])
     else:
@@ -49,28 +50,17 @@ def item():
 
 @app.route('/additem/<item>')
 def additem(item):
-    print('Add')
-    if session.get('items', False):
-        print('Items exist')
-        if session.get('counts', False):
-            if item in session['counts']:
-                session['counts'][item] += 1
-            else:
-                session['counts'][item] = 1
-                session['item'].append(item)
-        else:
-            session['counts'] = {item:1}
-            session['item'].append(item)
+    if item not in session['cartItems']:
+        session['cartItems'].append(item)
+    if item in session['cartAmounts']:
+        session['cartAmounts'][item]+=1
     else:
-        print("items dont exist")
-        session['items'] = [item]
-        session['counts'] = {item:1}
-        session['item'] = [item]
-    return redirect(url_for("cart", items = session.get("item",[]), name = item, count = session['counts'][item]))
+        session['cartAmounts'][item] = 1
+    return redirect(url_for("cart"))
 
 @app.route('/cart')
 def cart():
-    return render_template("cart.html", items = session.get('items', []))
+    return render_template("cart.html", items = session['cartItems'], count = session['cartAmounts'])
 
 @app.route('/shoppinglist')
 def shoppinglist():
@@ -96,9 +86,13 @@ def handleFileUpload():
 
 @app.route('/')
 def home():
+    session['cartItems'] = []
+    session['cartAmounts'] = {}
     return render_template("index.html")
 
 @app.route('/logout')
 def logout():
+    session['cartItems'] = []
+    session['cartAmounts'] = {}
     session['items'] = []
     return redirect(url_for("item"))
