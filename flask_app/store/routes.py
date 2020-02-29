@@ -9,5 +9,13 @@ items = {
 
 
 @app.route('/item/<name>')
-def item(name):
+def getInfo(name):
     return render_template("index.html", info=items[name])
+
+@app.route('/item')
+def item():
+    return render_template("item.html")
+
+@app.route('/cart')
+def cart():
+    return render_template("item.html")
