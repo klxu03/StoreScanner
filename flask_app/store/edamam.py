@@ -30,5 +30,3 @@ def product_from_upc(upc):
 	params = urllib.parse.urlencode(payload, quote_via=urllib.parse.quote)
 	response = get(url, params=params)
 	return response.json()
-
-print(product_from_upc("0857183005120"))
