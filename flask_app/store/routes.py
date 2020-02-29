@@ -2,8 +2,8 @@ from store import app
 from flask import render_template, url_for
 
 items = {
-    "apple" : {
-                "name" : "apple"
+    "apple": {
+                "name": "apple"
             }
 }
 
