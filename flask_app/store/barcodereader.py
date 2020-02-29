@@ -18,6 +18,6 @@ def decode(bc) :
 # Main
 def barcodereader(filename)
     # Read image
-    bc = cv2.imread('uploadedimage/' + filename)
+    bc = cv2.imread('uploaded-image/' + filename)
 
     decodedObjects = decode(bc)
