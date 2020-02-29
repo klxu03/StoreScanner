@@ -27,10 +27,14 @@ def getInfo(name):
 def item():
     itemForm = ItemForm()
     if itemForm.validate_on_submit():
-        usrItem = request.form['item']
-        print(usrItem)
-        # go to the page of the given item
-        return redirect(url_for('getInfo', name=usrItem))
+        itemText = request.form['item']
+        if itemText is not "": # there's something in the text form
+            print(itemText)
+            # go to the page of the given item
+            return redirect(url_for('getInfo', name=itemText))
+        else: # no text - is there a picture? (TODO)
+            print("No text!")
+            return redirect(url_for('getInfo', name='apple')) #temporarily just redirect to /items/apple
     else:
     	return render_template("itemSearch.html", form=itemForm)
 
