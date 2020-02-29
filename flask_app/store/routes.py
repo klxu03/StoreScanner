@@ -19,3 +19,7 @@ def item():
 @app.route('/cart')
 def cart():
     return render_template("item.html")
+
+@app.route('/')
+def home():
+    return render_template("index.html")
