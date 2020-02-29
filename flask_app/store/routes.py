@@ -28,15 +28,10 @@ sess.init_app(app)
 
 @app.route('/item/<name>')
 def getInfo(name):
-    print('hi')
     item_info = product_info(name) # get nutritional info based on name
-    print(item_info)
     extra_info = items[name] if name in items else items["other"]
-    
-    if name in items:
-        return render_template("item.html", info=items[name])
-    else:
-        return render_template("item.html", info={"name":"Unknown item"})
+
+    return render_template("item.html", name=name, item_info=item_info, extra_info=extra_info)
 
 @app.route('/item', methods=['GET', 'POST'])
 def item():
