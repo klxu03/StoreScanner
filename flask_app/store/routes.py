@@ -1,7 +1,7 @@
 from store import app
 from flask import render_template, url_for, session, request, redirect
 from store.form import ItemForm
-# Import sessions 
+# Import sessions
 from flask_session import Session
 
 items = {
