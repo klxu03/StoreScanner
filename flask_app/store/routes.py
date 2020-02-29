@@ -9,9 +9,13 @@ items = {
 
 
 @app.route('/item/<name>')
-def item(name):
-	if name not in items: # this item is not in the list of available items
-		itemInfo = {"name": "undefined"}
-	else:
-		itemInfo = items[name]
-	return render_template("index.html", info=itemInfo)
+def getInfo(name):
+    return render_template("index.html", info=items[name])
+
+@app.route('/item')
+def item():
+    return render_template("item.html")
+
+@app.route('/cart')
+def cart():
+    return render_template("item.html")

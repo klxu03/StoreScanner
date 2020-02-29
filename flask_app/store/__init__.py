@@ -9,15 +9,13 @@ from flask_session import Session
 import os
 # Import CSRF protection
 from flask_wtf.csrf import CSRFProtect
-# Env vars
-from dotenv import load_dotenv
-load_dotenv()
+
 
 # Create the flask app
 app = Flask(__name__)
 
 # Configure the secret key, which is needed for the application
-app.config['SECRET_KEY'] = os.getenv('sc')
+app.config['SECRET_KEY'] = 'SECRET_KEY'
 # Set the session type to filesystem because the default system won't work for our purposes
 app.config['SESSION_TYPE'] = 'filesystem'
 # Active sessions for the app
