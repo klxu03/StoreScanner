@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 {% block item %}
-				
+    Name: {{name}}
+    Items: {{items}}
+    Count: {{count}}
+    
    <div class="container">
       <table id="cart" class="table table-hover table-condensed">
                    <thead>
@@ -24,12 +27,12 @@
          <div class = "row">
             <div class = "col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive"/>
                <div class="col-sm-12">
-                  <h4 class="nomargin">{{item["name"]}}</h4>
+                  <h4 class="nomargin">{{name}}</h4>
                </div>
             </div>
             <td data-th="Price">$1.99</td>
             <td data-th="Quantity">
-               <input type="number" class="form-control text-center" value="100">
+               <input type="number" class="form-control text-center" value={{count}}>
             </td>
          </class>
          <td data-th="Subtotal" class="text-center">1.99</td>

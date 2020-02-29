@@ -7,7 +7,8 @@
             <input type="submit" value="Upload"/>
     </form> 
 
-    <form>
+    <form action="{{url_for('item')}}" method="post">
+        {{ form.csrf_token }}
         <div class="input-group" > 
             {{ form.item(class="form-control form-contol-lg")}}
             <span class="input-group-btn">
