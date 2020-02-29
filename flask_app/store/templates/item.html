@@ -1,4 +1,6 @@
 {% extends "layout.html" %}
 {% block item %}
     Item: {{info["name"]}}
+    <br>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='/../additem/{{info["name"]}}'">Add to Cart</button>
 {% endblock %}

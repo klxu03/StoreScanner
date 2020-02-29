@@ -2,16 +2,16 @@
 {% block item %}
 <div class="col-md-4 offset-md-4 login-form">
     <form method="POST" action="{{ url_for('item') }}">
-        {{ form.csrf_token }} 
+        {{ form.csrf_token }}
         </fieldset>
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Search for an item</legend>
             <div class="form-group" id="hide">
-                CHoose an image
+                Choose an image
                 {{ form.picture(class="")}}
                 {{ form.picture.label(class="form-control-label")}}
             </div>
-            <div class="input-group" > 
+            <div class="input-group" >
                 {{ form.item(class="form-control form-contol-lg")}}
                 <span class="input-group-btn">
                     {{ form.submit(class="btn btn-info go inline", id='submit') }}
