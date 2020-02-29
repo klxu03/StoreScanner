@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block item %}
+<div class="col-md-4 offset-md-4 login-form">
+    <form method="POST" action="{{ url_for('item') }}">
+        {{ form.csrf_token }} 
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Search for an item</legend>
+            <div class="form-group"> 
+                {{ form.item(class="form-control form-contol-lg")}}
+            </div>
+        </fieldset>
+        {{ form.submit(class="btn btn-info btn-block", id='submit') }}
+    </form>
+</div>
+{% endblock %}
