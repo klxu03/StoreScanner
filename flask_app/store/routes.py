@@ -59,12 +59,15 @@ def additem(item):
                 session['counts'][item] += 1
             else:
                 session['counts'][item] = 1
+                session['item'].append(item)
         else:
-            session['counts'][item] = 1
+            session['counts'] = {item:1}
+            session['item'].append(item)
     else:
         session['items'] = [item]
-        session['counts'][item] = 1
-    return redirect(url_for("cart", items = session.get('items', [])))
+        session['counts'] = {item:1}
+        session['item'].append(item)
+    return redirect(url_for("cart", items = session.get("item",[]), name = item, count = session['counts'][item]))
 
 @app.route('/cart')
 def cart():
