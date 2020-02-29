@@ -4,11 +4,23 @@
     <form method="POST" action="{{ url_for('item') }}">
         {{ form.csrf_token }} 
         <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Take a picture of an item's barcode</legend>
+            <div class="form-group"> 
+                <input type="file" accept="image/*" class="form-control-file" id="item-picture" placeholder="Enter an item">
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Search for an item manually</legend>
+            <div class="form-group"> 
+                <input type="text" class="form-control" id="item-text" placeholder="Enter an item">
+            </div>
+        </fieldset>
+        <!--- <fieldset class="form-group">
             <legend class="border-bottom mb-4">Search for an item</legend>
             <div class="form-group"> 
                 {{ form.item(class="form-control form-contol-lg")}}
             </div>
-        </fieldset>
+        </fieldset> --->
         {{ form.submit(class="btn btn-info btn-block", id='submit') }}
     </form>
 </div>
