@@ -40,7 +40,7 @@ def item():
     if itemForm.validate_on_submit():
         itemText = request.form['item']
         itemImage = request.form['picture']
-        if itemText is not "": # there's something in the text form
+        if itemText != "": # there's something in the text form
             print(itemText)
             # go to the page of the given item
             return redirect(url_for('getInfo', name=itemText))
