@@ -1,5 +1,7 @@
 from store import app
-from flask import render_template, url_for
+from flask import render_template, url_for, session
+# Import sessions 
+from flask_session import Session
 
 items = {
     "apple": {
@@ -10,6 +12,10 @@ items = {
             }
 }
 
+# Create a session object and initilize it
+sess = Session()
+sess.init_app(app)
+
 
 @app.route('/item/<name>')
 def getInfo(name):
@@ -19,9 +25,17 @@ def getInfo(name):
 def item():
     return render_template("item.html", info={"name":"Waiting for user input"})
 
+@app.route('/additem/<item>')
+def additem(item):
+    if session.get('items', False):
+        session['items'].append(item)
+    else:
+        session['items'] = [item]
+    return render_template("cart.html", items = session.get('items', []))
+
 @app.route('/cart')
 def cart():
-    return render_template("cart.html")
+    return render_template("cart.html", items = session.get('items', []))
 
 @app.route('/scan')
 def scan():
