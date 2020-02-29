@@ -1,8 +1,10 @@
+import os
 from store import app
 from flask import render_template, url_for, session, request, redirect
-from store.form import ItemForm
 from .edamam import product_info
+from store.form import ItemForm, ListForm
 from flask_session import Session
+from werkzeug.utils import secure_filename
 
 
 items = {
@@ -53,13 +55,15 @@ def item():
 def additem(item):
     if session.get('items', False):
         if session.get('counts', False):
-            pass
-        else:
             if item in session['counts']:
                 session['counts'][item] += 1
-        session['items'].append(item)
+            else:
+                session['counts'][item] = 1
+        else:
+            session['counts'][item] = 1
     else:
         session['items'] = [item]
+        session['counts'][item] = 1
     return redirect(url_for("cart", items = session.get('items', [])))
 
 @app.route('/cart')
@@ -68,13 +72,25 @@ def cart():
 
 @app.route('/shoppinglist')
 def shoppinglist():
+    listForm = ListForm()
+    if listForm.validate_on_submit():
+        listItem = request.form['item']
+        print(listItem)
+    return render_template("shoppinglist.html", form=listForm)
+
+@app.route('/addlistitem', methods=['POST'])
+def addlistitem():
     if session.get('shoppinglist', False):
         session['shoppinglist'].append()
-    return render_template("shoppinglist.html")
+    return render_template("shoppinglist.html", shoppinglist = session.get('shoppinglist', []))
 
-@app.route('/scan')
-def scan():
-    return render_template("scan.html")
+@app.route("/handleUpload", methods=['POST'])
+def handleFileUpload():
+    if 'photo' in request.files:
+        photo = request.files['photo']
+        if photo.filename != '':            
+            photo.save(os.path.join('./store/image-upload', photo.filename))
+    return redirect(url_for('fileFrontPage'))
 
 @app.route('/')
 def home():

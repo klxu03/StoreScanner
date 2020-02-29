@@ -16,9 +16,8 @@ def decode(bc) :
 
 
 # Main
-if __name__ == '__main__':
-
+def barcodereader(filename)
     # Read image
-    bc = cv2.imread('barcode.png')
+    bc = cv2.imread('uploadedimage/' + filename)
 
     decodedObjects = decode(bc)
