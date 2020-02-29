@@ -1,5 +1,6 @@
 from store import app
-from flask import render_template, url_for, session
+from flask import render_template, url_for, session, request, redirect
+from store.form import ItemForm
 # Import sessions 
 from flask_session import Session
 
@@ -21,9 +22,16 @@ sess.init_app(app)
 def getInfo(name):
     return render_template("item.html", info=items[name]) if name in items else render_template("item.html", info={"name":"Unknown item"})
 
-@app.route('/item')
+@app.route('/item', methods=['GET', 'POST'])
 def item():
-    return render_template("item.html", info={"name":"Waiting for user input"})
+    itemForm = ItemForm()
+    if itemForm.validate_on_submit():
+        usrItem = request.form['item']
+        print(usrItem)
+        # go to the page of the given item
+        return redirect(url_for('getInfo', name=usrItem))
+    else:
+    	return render_template("itemSearch.html", form=itemForm)
 
 @app.route('/additem/<item>')
 def additem(item):
@@ -44,3 +52,8 @@ def scan():
 @app.route('/')
 def home():
     return render_template("index.html")
+
+@app.route('/logout')
+def logout():
+    session['items'] = []
+    return redirect(url_for("item"))
