@@ -46,6 +46,12 @@ def additem(item):
 def cart():
     return render_template("cart.html", items = session.get('items', []))
 
+@app.route('/shoppinglist')
+def shoppinglist():
+    if session.get('shoppinglist', False):
+        session['shoppinglist'].append()
+    return render_template("shoppinglist.html")
+
 @app.route('/scan')
 def scan():
     return render_template("scan.html")
