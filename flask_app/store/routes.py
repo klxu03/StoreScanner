@@ -6,7 +6,8 @@ from flask_session import Session
 
 items = {
     "apple": {
-                "name": "apple"
+                "name": "apple",
+                "price": 1.99
             },
     "orange": {
                 "name": "orange"
@@ -39,7 +40,7 @@ def additem(item):
         session['items'].append(item)
     else:
         session['items'] = [item]
-    return render_template("cart.html", items = session.get('items', []))
+    return redirect(url_for("cart", items = session.get('items', [])))
 
 @app.route('/cart')
 def cart():

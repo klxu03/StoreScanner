@@ -9,11 +9,26 @@ def nutritional_info(food):
 	load_dotenv() # load app id, key
 	url = "https://api.edamam.com/api/nutrition-data"
 	payload = {
-		"app_id": getenv("APP_ID"),
-		"app_key": getenv("APP_KEY"),
+		"app_id": getenv("NUTR_DETAILS_APP_ID"),
+		"app_key": getenv("NUTR_DETAILS_APP_KEY"),
 		"ingr": food 
 	}
 
 	params = urllib.parse.urlencode(payload, quote_via=urllib.parse.quote)
 	response = get(url, params=params)
 	return response.json()
+
+def product_from_upc(upc):
+	"""Based on the barcode (Universal Product Code), determine what produce it is."""
+	load_dotenv() # load app id, key
+	url = "https://api.edamam.com/api/food-database/parser"
+	payload = {
+		"upc": upc,
+		"app_id": getenv("FOOD_DATA_APP_ID"),
+		"app_key": getenv("FOOD_DATA_APP_KEY"),
+	}
+	params = urllib.parse.urlencode(payload, quote_via=urllib.parse.quote)
+	response = get(url, params=params)
+	return response.json()
+
+print(product_from_upc("0857183005120"))
