@@ -5,16 +5,15 @@
         {{ form.csrf_token }}
         Choose the file: <input type="file" name="photo"/><BR>
             <input type="submit" value="Upload"/>
+    </form> 
 
+    <form>
         <div class="input-group" > 
             {{ form.item(class="form-control form-contol-lg")}}
             <span class="input-group-btn">
                 {{ form.submit(class="btn btn-info go inline", id='submit') }}
             </span>
         </div>
-    </form> 
-
-    
-
+    </form>
 </div>
 {% endblock %}
