@@ -1,4 +1,8 @@
 {% extends "layout.html" %}
 {% block item %}
    Cart
+   items:
+   {%for item in items%}
+        {{item}}
+   {%endfor%}
 {% endblock %}
