@@ -14,7 +14,10 @@ items = {
             },
     "orange": {
                 "name": "orange"
-            }
+            },
+    "other":{
+                "name": "unknown"
+    }
 }
 
 
@@ -24,51 +27,35 @@ sess.init_app(app)
 
 
 @app.route('/item/<name>')
-def getInfo(name, file_name=None):
-	if file_name == None: #name based evaluation
-		item_info = product_info(name) # get nutritional info based on name
-		print(item_info)
-		extra_info = items[name] if name in items else items["other"]
-		if name in items:
-		    return render_template("item.html", info=items[name])
-		else:
-			return render_template("item.html", info={"name":"Unknown item"})
+def getInfo(name):
+    item_info = product_info(name) # get nutritional info based on name
+    extra_info = items[name] if name in items else items["other"]
+
+    return render_template("item.html", name=name, item_info=item_info, extra_info=extra_info)
 
 @app.route('/item', methods=['GET', 'POST'])
 def item():
     itemForm = ItemForm()
     if itemForm.validate_on_submit():
         itemText = request.form['item']
-        itemImage = request.form['picture']
-        if itemText != "": # there's something in the text form
-            print(itemText)
-            # go to the page of the given item
-            return redirect(url_for('getInfo', name=itemText))
-        else: # no text - is there a picture? (TODO)
-            print("No text!")
-            print(itemImage)
-            return redirect(url_for('getInfo', name='apple')) #temporarily just redirect to /items/apple
+        print(itemText)
+        return redirect(url_for('getInfo', name=itemText))
     else:
-    	return render_template("itemSearch.html", form=itemForm)
+        return render_template("itemSearch.html", form=itemForm)
 
 @app.route('/additem/<item>')
 def additem(item):
-    if session.get('items', False):
-        if session.get('counts', False):
-            if item in session['counts']:
-                session['counts'][item] += 1
-            else:
-                session['counts'][item] = 1
-        else:
-            session['counts'][item] = 1
+    if item not in session['cartItems']:
+        session['cartItems'].append(item)
+    if item in session['cartAmounts']:
+        session['cartAmounts'][item]+=1
     else:
-        session['items'] = [item]
-        session['counts'][item] = 1
-    return redirect(url_for("cart", items = session.get('items', [])))
+        session['cartAmounts'][item] = 1
+    return redirect(url_for("cart"))
 
 @app.route('/cart')
 def cart():
-    return render_template("cart.html", items = session.get('items', []))
+    return render_template("cart.html", items = session['cartItems'], count = session['cartAmounts'])
 
 @app.route('/shoppinglist')
 def shoppinglist():
@@ -94,9 +81,13 @@ def handleFileUpload():
 
 @app.route('/')
 def home():
+    session['cartItems'] = []
+    session['cartAmounts'] = {}
     return render_template("index.html")
 
 @app.route('/logout')
 def logout():
+    session['cartItems'] = []
+    session['cartAmounts'] = {}
     session['items'] = []
     return redirect(url_for("item"))
