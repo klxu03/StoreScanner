@@ -12,4 +12,4 @@ def home():
 @app.route('/item/<name>')
 def item(name):
     info["name"] = name
-    return render_template("index.html", info=info)
+    return render_template("index.html", info = info)
