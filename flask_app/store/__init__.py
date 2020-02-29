@@ -2,7 +2,7 @@
 # Import flask
 from flask import Flask
 # Import ssl forcer
-from flask_sslify import SSLify
+#from flask_sslify import SSLify
 # Import sessions
 from flask_session import Session
 # Import the os module
