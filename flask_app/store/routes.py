@@ -1,10 +1,11 @@
 import os
 from store import app
 from flask import render_template, url_for, session, request, redirect
+from .edamam import product_info
 from store.form import ItemForm, ListForm
-# Import sessions
 from flask_session import Session
 from werkzeug.utils import secure_filename
+
 
 items = {
     "apple": {
@@ -23,14 +24,21 @@ sess.init_app(app)
 
 
 @app.route('/item/<name>')
-def getInfo(name):
-    return render_template("item.html", info=items[name]) if name in items else render_template("item.html", info={"name":"Unknown item"})
+def getInfo(name, file_name=None):
+	if file_name == None: #name based evaluation
+		item_info = product_info(name) # get nutritional info based on name
+		print(item_info)
+		extra_info = items[name] if name in items else items["other"]
+		if name in items:
+		    return render_template("item.html", info=items[name])
+		else:
+			return render_template("item.html", info={"name":"Unknown item"})
 
 @app.route('/item', methods=['GET', 'POST'])
 def item():
     itemForm = ItemForm()
     if itemForm.validate_on_submit():
-        itemText = request.form['item']        
+        itemText = request.form['item']
         itemImage = request.form['picture']
         if itemText is not "": # there's something in the text form
             print(itemText)
@@ -68,7 +76,7 @@ def shoppinglist():
     if listForm.validate_on_submit():
         listItem = request.form['item']
         print(listItem)
-    return render_template("shoppinglist.html", form=listForm)
+    return render_template("shoppinglist.html", form=listForm, shoppinglist = session.get('shoppinglist', []))
 
 @app.route('/addlistitem', methods=['POST'])
 def addlistitem():
