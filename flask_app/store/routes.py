@@ -1,5 +1,5 @@
 from store import app
-from flask import render_template, url_for, session, request
+from flask import render_template, url_for, session, request, redirect
 from store.form import ItemForm
 # Import sessions 
 from flask_session import Session
@@ -42,3 +42,8 @@ def cart():
 @app.route('/')
 def home():
     return render_template("index.html")
+
+@app.route('/logout')
+def logout():
+    session['items'] = []
+    return redirect(url_for("item"))
