@@ -14,6 +14,7 @@ items = {
             }
 }
 
+
 # Create a session object and initilize it
 sess = Session()
 sess.init_app(app)
@@ -27,13 +28,15 @@ def getInfo(name):
 def item():
     itemForm = ItemForm()
     if itemForm.validate_on_submit():
-        itemText = request.form['item']
+        itemText = request.form['item']        
+        itemImage = request.form['picture']
         if itemText is not "": # there's something in the text form
             print(itemText)
             # go to the page of the given item
             return redirect(url_for('getInfo', name=itemText))
         else: # no text - is there a picture? (TODO)
             print("No text!")
+            print(itemImage)
             return redirect(url_for('getInfo', name='apple')) #temporarily just redirect to /items/apple
     else:
     	return render_template("itemSearch.html", form=itemForm)
@@ -41,6 +44,11 @@ def item():
 @app.route('/additem/<item>')
 def additem(item):
     if session.get('items', False):
+        if session.get('counts', False):
+            pass
+        else:
+            if item in session['counts']:
+                session['counts'][item] += 1
         session['items'].append(item)
     else:
         session['items'] = [item]
