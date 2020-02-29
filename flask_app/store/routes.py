@@ -28,7 +28,7 @@ def getInfo(name):
 def item():
     itemForm = ItemForm()
     if itemForm.validate_on_submit():
-        itemText = request.form['item']        
+        itemText = request.form['item']
         itemImage = request.form['picture']
         if itemText is not "": # there's something in the text form
             print(itemText)
@@ -64,7 +64,7 @@ def shoppinglist():
     if listForm.validate_on_submit():
         listItem = request.form['item']
         print(listItem)
-    return render_template("shoppinglist.html", form=listForm)
+    return render_template("shoppinglist.html", form=listForm, shoppinglist = session.get('shoppinglist', []))
 
 @app.route('/addlistitem', methods=['POST'])
 def addlistitem():
