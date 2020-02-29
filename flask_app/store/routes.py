@@ -13,6 +13,7 @@ items = {
             }
 }
 
+
 # Create a session object and initilize it
 sess = Session()
 sess.init_app(app)
@@ -27,7 +28,8 @@ def item():
     itemForm = ItemForm()
     if itemForm.validate_on_submit():
         usrItem = request.form['item']
-        print(usrItem)
+        image = request.form['picture']
+        print(image)
         # go to the page of the given item
         return redirect(url_for('getInfo', name=usrItem))
     else:
@@ -36,6 +38,11 @@ def item():
 @app.route('/additem/<item>')
 def additem(item):
     if session.get('items', False):
+        if session.get('counts', False):
+            pass
+        else:
+            if item in session['counts']:
+                session['counts'][item] += 1
         session['items'].append(item)
     else:
         session['items'] = [item]
