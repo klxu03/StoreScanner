@@ -3,6 +3,7 @@ from flask import render_template, url_for, session, request, redirect
 from store.form import ItemForm
 # Import sessions
 from flask_session import Session
+from werkzeug.utils import secure_filename
 
 items = {
     "apple": {
@@ -29,8 +30,8 @@ def item():
     itemForm = ItemForm()
     if itemForm.validate_on_submit():
         usrItem = request.form['item']
-        image = request.form['picture']
-        print(image)
+        filename = itemForm.picture.data.filename
+        itemForm.picture.data.save('uploads/' + filename)
         # go to the page of the given item
         return redirect(url_for('getInfo', name=usrItem))
     else:
@@ -40,13 +41,15 @@ def item():
 def additem(item):
     if session.get('items', False):
         if session.get('counts', False):
-            pass
-        else:
             if item in session['counts']:
                 session['counts'][item] += 1
-        session['items'].append(item)
+            else:
+                session['counts'][item] = 1
+        else:
+            session['counts'][item] = 1
     else:
         session['items'] = [item]
+        session['counts'][item] = 1
     return redirect(url_for("cart", items = session.get('items', [])))
 
 @app.route('/cart')
