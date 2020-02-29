@@ -6,7 +6,8 @@ from flask_session import Session
 
 items = {
     "apple": {
-                "name": "apple"
+                "name": "apple",
+                "price": 1.99
             },
     "orange": {
                 "name": "orange"
