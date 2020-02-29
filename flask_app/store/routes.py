@@ -7,6 +7,9 @@ from flask_session import Session
 items = {
     "apple": {
                 "name": "apple"
+            },
+    "orange": {
+                "name": "orange"
             }
 }
 
@@ -41,6 +44,10 @@ def additem(item):
 @app.route('/cart')
 def cart():
     return render_template("cart.html", items = session.get('items', []))
+
+@app.route('/scan')
+def scan():
+    return render_template("scan.html")
 
 @app.route('/')
 def home():
