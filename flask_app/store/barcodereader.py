@@ -1,6 +1,3 @@
-#!/usr/bin/python3
-# -*- coding: Utf-8 -*-
-
 from __future__ import print_function
 import pyzbar.pyzbar as pyzbar
 import cv2
@@ -11,8 +8,9 @@ def decode(bc) :
 
     # Print results
     for obj in decodedObjects:
+        barNum = (obj.data).decode('utf-8')
         print('Type : ', obj.type)
-        print('Data : ', obj.data)
+        print('Data : ', barNum)
 
     return decodedObjects
 
