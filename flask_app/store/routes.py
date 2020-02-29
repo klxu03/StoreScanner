@@ -3,6 +3,7 @@ from flask import render_template, url_for, session, request, redirect
 from store.form import ItemForm, ListForm
 # Import sessions
 from flask_session import Session
+from werkzeug.utils import secure_filename
 
 items = {
     "apple": {
@@ -45,13 +46,15 @@ def item():
 def additem(item):
     if session.get('items', False):
         if session.get('counts', False):
-            pass
-        else:
             if item in session['counts']:
                 session['counts'][item] += 1
-        session['items'].append(item)
+            else:
+                session['counts'][item] = 1
+        else:
+            session['counts'][item] = 1
     else:
         session['items'] = [item]
+        session['counts'][item] = 1
     return redirect(url_for("cart", items = session.get('items', [])))
 
 @app.route('/cart')
